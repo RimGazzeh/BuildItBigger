@@ -5,18 +5,18 @@ import io.geekgirl.android.lib.JokesBank;
 /** The object model for the data we are sending through endpoints */
 public class MyBean {
 
-    private JokesBank jokesBank;
     private String joke;
 
-    public MyBean(){
-        jokesBank = new JokesBank();
+    public MyBean() {
+        this.joke = "hahahaha";
     }
 
-    public void setJoke() {
-        joke =  jokesBank.getJoke();
-    }
 
     public String getJoke() {
         return joke;
+    }
+
+    public void setJoke() {
+        this.joke = JokesBank._getJoke();
     }
 }

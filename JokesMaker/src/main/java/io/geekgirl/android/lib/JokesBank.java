@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class JokesBank {
 
-    public String getJoke() {
+    public static String _getJoke() {
         String jokes[] = {
                 "Unix is user friendly. It's just selective about who its friends are.",
                 "If at first you don't succeed, call it version 1.0",

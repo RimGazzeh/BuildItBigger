@@ -6,17 +6,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import io.geekgirl.android.jokeslib.Constants;
 import io.geekgirl.android.jokeslib.JokeTellerActivity;
 
 
 public class MainActivity extends AppCompatActivity implements JokesAsyncTask.Callback {
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mProgressBar = findViewById(R.id.progressbar);
     }
 
 
@@ -43,12 +46,14 @@ public class MainActivity extends AppCompatActivity implements JokesAsyncTask.Ca
     }
 
     public void tellJoke(View view) {
+        mProgressBar.setVisibility(View.VISIBLE);
         new JokesAsyncTask(this).execute();
     }
 
 
     @Override
     public void onFinished(String result) {
+        mProgressBar.setVisibility(View.GONE);
         Intent intent = new Intent(this, JokeTellerActivity.class);
         intent.putExtra(Constants.JOKE_INTENT, result);
         startActivity(intent);

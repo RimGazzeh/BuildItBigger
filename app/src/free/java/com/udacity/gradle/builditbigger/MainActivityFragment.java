@@ -1,6 +1,8 @@
 package com.udacity.gradle.builditbigger;
 
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
 
@@ -15,22 +18,31 @@ import com.google.android.gms.ads.MobileAds;
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
+    private InterstitialAd mInterstitialAd;
 
     public MainActivityFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        MobileAds.initialize(getActivity().getApplicationContext(), getString(R.string.ad_app_id));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
-        MobileAds.initialize(getActivity().getApplicationContext(), getString(R.string.ad_app_id));
 
         AdView mAdView =  root.findViewById(R.id.adView);
-        // Create an ad request. Check logcat output for the hashed device ID to
-        // get test ads on a physical device. e.g.
-        // "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."
+
+        // get test ads on my physical device
+        String android_id = Settings.Secure.getString(getContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+
         AdRequest adRequest = new AdRequest.Builder()
-                //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice(android_id)
                 .build();
         mAdView.loadAd(adRequest);
         return root;
