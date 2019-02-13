@@ -1,6 +1,7 @@
 package com.udacity.gradle.builditbigger;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -46,7 +47,8 @@ public class JokesAsyncTask extends AsyncTask<Void, Void, String> {
         try {
             return myApiService.pullJokes().execute().getJoke();
         } catch (IOException e) {
-            return e.getMessage();
+            Log.d("JokesAsyncTask", "doInBackground error: " + e.getMessage());
+            return null;
         }
     }
 
